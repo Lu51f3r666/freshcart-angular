@@ -1,0 +1,123 @@
+<section class="cart my-5 py-5">
+  <!-- Loading State -->
+  <div *ngIf="isLoading" class="d-flex justify-content-center align-items-center" style="min-height: 400px;">
+    <div class="text-center">
+      <div class="spinner-border text-success" role="status">
+        <span class="visually-hidden">Loading...</span>
+      </div>
+      <p class="mt-3">Loading your cart...</p>
+    </div>
+  </div>
+
+  <!-- Empty Cart State -->
+  <div *ngIf="!isLoading && (!cartDetails || !cartDetails.products || cartDetails.products.length === 0)" 
+       class="container text-center py-5">
+    <img src="../../../../assets/images/emptyCart.svg" alt="Empty Cart" class="mb-4" style="max-width: 300px;">
+    <h3 class="text-muted">Your cart is empty</h3>
+    <p class="text-muted">Start shopping to add items to your cart!</p>
+    <a routerLink="/main/products" class="btn btn-success">Continue Shopping</a>
+  </div>
+
+  <!-- Cart Items -->
+  <div *ngIf="!isLoading && cartDetails && cartDetails.products && cartDetails.products.length > 0" 
+       class="container">
+    
+    <h2 class="text-center fw-bold mb-4" style="color: #495057;">Cart Shop</h2>
+    
+    <!-- Cart Summary -->
+    <div class="row mb-4">
+      <div class="col-md-6">
+        <p class="fw-semibold">
+          total price: <span class="text-success">{{cartDetails.totalCartPrice}}</span>
+        </p>
+      </div>
+      <div class="col-md-6 text-md-end">
+        <p class="fw-semibold">
+          total number of items: <span class="text-success">{{cartDetails.numOfCartItems}}</span>
+        </p>
+      </div>
+    </div>
+
+    <!-- Cart Items List -->
+    <div *ngFor="let item of cartDetails.products" class="cart-item mb-4 p-3 border rounded">
+      <div class="row align-items-center">
+        
+        <!-- Product Image -->
+        <div class="col-md-2 col-4 mb-3 mb-md-0">
+          <img [src]="item.product.imageCover" 
+               [alt]="item.product.title" 
+               class="img-fluid rounded">
+        </div>
+
+        <!-- Product Details -->
+        <div class="col-md-6 col-8 mb-3 mb-md-0">
+          <h5 class="fw-bold mb-2" style="color: #495057;">
+            {{getShortTitle(item.product.title)}}
+          </h5>
+          <p class="text-success fw-semibold mb-2">{{item.price}} EGP</p>
+          
+          <!-- Remove Button -->
+          <button class="btn text-danger p-0 border-0 bg-transparent" 
+                  [disabled]="item.isLoadingRemove"
+                  (click)="removeItem(getProductId(item.product))">
+            <span *ngIf="item.isLoadingRemove" 
+                  class="spinner-border spinner-border-sm me-1" 
+                  role="status" 
+                  aria-hidden="true"></span>
+            <i class="fas fa-trash-alt me-1"></i>
+            <span *ngIf="!item.isLoadingRemove">Remove</span>
+            <span *ngIf="item.isLoadingRemove">Removing...</span>
+          </button>
+        </div>
+
+        <!-- Quantity Controls -->
+        <div class="col-md-4 col-12">
+          <div class="d-flex align-items-center justify-content-center justify-content-md-end">
+            <!-- Decrease Quantity -->
+            <button class="btn btn-outline-success btn-sm" 
+                    type="button"
+                    [disabled]="item.count <= 1 || item.isLoadingUpdate"
+                    (click)="updateQuantity(getProductId(item.product), item.count - 1)">
+              <i class="fas fa-minus"></i>
+            </button>
+            
+            <!-- Current Quantity -->
+            <span class="mx-3 fw-bold fs-5" style="color: #495057;">
+              {{item.count}}
+            </span>
+            
+            <!-- Increase Quantity -->
+            <button class="btn btn-outline-success btn-sm" 
+                    type="button"
+                    [disabled]="item.isLoadingUpdate"
+                    (click)="updateQuantity(getProductId(item.product), item.count + 1)">
+              <i class="fas fa-plus"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Cart Actions -->
+    <div class="text-center mt-5">
+      <!-- Checkout Button -->
+      <button class="btn btn-primary btn-lg me-3 px-4" 
+              (click)="proceedToCheckout()"
+              [disabled]="!cartDetails || !cartDetails.products || cartDetails.products.length === 0">
+        check out
+      </button>
+      
+      <!-- Clear Cart Button -->
+      <button class="btn btn-outline-success btn-lg px-4" 
+              (click)="clearCart()"
+              [disabled]="isLoadingClear">
+        <span *ngIf="isLoadingClear" 
+              class="spinner-border spinner-border-sm me-1" 
+              role="status" 
+              aria-hidden="true"></span>
+        <span *ngIf="!isLoadingClear">Clear Your Cart</span>
+        <span *ngIf="isLoadingClear">Clearing...</span>
+      </button>
+    </div>
+  </div>
+</section>

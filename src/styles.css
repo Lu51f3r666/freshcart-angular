@@ -1,0 +1,104 @@
+/* You can add global styles to this file, and also import other style files */
+@import '~bootstrap/dist/css/bootstrap.min.css';
+@import '~@fortawesome/fontawesome-free/css/all.min.css';
+
+:root {
+  --main-color: #198754;
+  --shadow: 0 4px 20px rgba(0,0,0,0.1);
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.offline {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 9999;
+  text-align: center;
+  padding: 10px;
+  color: white;
+}
+
+.loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+.product-card {
+  transition: transform 0.3s ease;
+}
+
+.product-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+.btn-primary {
+  background-color: #0d6efd;
+  border-color: #0d6efd;
+}
+
+.btn-primary:hover {
+  background-color: #0b5ed7;
+  border-color: #0a58ca;
+}
+
+/* Toastr Custom Styles */
+
+.toast-custom {
+  z-index: 10000 !important;
+  position: relative;
+  border-radius: 8px !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
+  border: none !important;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important;
+}
+
+.toast-container {
+  z-index: 10000 !important;
+}
+
+.toast-top-right {
+  top: 20px !important;
+  right: 20px !important;
+  z-index: 10000 !important;
+}
+
+.toast-success {
+  background-color: #28a745 !important;
+  color: white !important;
+}
+
+.toast-error {
+  background-color: #dc3545 !important;
+  color: white !important;
+}
+
+.toast-info {
+  background-color: #17a2b8 !important;
+  color: white !important;
+}
+
+.toast-warning {
+  background-color: #ffc107 !important;
+  color: #212529 !important;
+}
+
+.toast-title {
+  font-weight: bold !important;
+  margin-bottom: 4px !important;
+}
+
+.toast-message {
+  font-size: 14px !important;
+  line-height: 1.4 !important;
+} 
